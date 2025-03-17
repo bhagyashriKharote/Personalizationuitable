@@ -1,0 +1,283 @@
+<mvc:View
+    height="100%"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.ui.table"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:m="sap.m"
+    xmlns:vm="sap.ui.fl.variants"
+    xmlns:dnd="sap.ui.core.dnd"
+    controllerName="com.personalization.ui.tablepersonalizationui.controller.personalizationui"
+>
+    <m:Page showHeader="false">
+        <!-- Filter Bar -->
+        <fb:FilterBar
+            id="filterBar"
+            useToolbar="true"
+            advancedMode="false"
+            search=".onGoPress"
+        >
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem
+                    groupName="Basic"
+                    label="{i18n>department}"
+                    name="Department"
+                    visibleInFilterBar="false"
+                >
+                    <fb:control>
+                        <m:Input
+                            id="departmentInput"
+                            class="sapUiSmallMarginEnd"
+                        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    groupName="Basic"
+                    label="{i18n>title}"
+                    name="Title"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <m:Input
+                            id="titleInput"
+                            class="sapUiSmallMarginEnd"
+                        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+                <fb:FilterGroupItem
+                    groupName="Basic"
+                    label="{i18n>skills}"
+                    name="Skills"
+                    visibleInFilterBar="true"
+                >
+                    <fb:control>
+                        <m:Input
+                            id="skillsInput"
+                            class="sapUiSmallMarginEnd"
+                        />
+                    </fb:control>
+                </fb:FilterGroupItem>
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+
+        <!-- Table with Personalization -->
+        <Table
+            id="idEmployeeTable"
+            rows="{/employees}"
+            selectionMode="MultiToggle"
+            enableColumnFreeze="true"
+            enableColumnReordering="true"
+            threshold="20"
+            rowActionCount="2"
+        >
+            <extension>
+                <m:OverflowToolbar>
+                    <m:Title
+                        id="title"
+                        text="{i18n>employeeDetails}"
+                    />
+                    <m:ToolbarSeparator />
+                    <vm:VariantManagement
+                        id="p13nVm"
+                        for="idEmployeeTable"
+                    />
+                    <m:ToolbarSpacer />
+                    <m:Button
+                        id="hideFilterButton"
+                        icon="sap-icon://decline"
+                        tooltip="{i18n>hideFilterBar}"
+                        press="onHideFilterPress"
+                    />
+                    <m:Button
+                        id="filterButton"
+                        icon="sap-icon://filter"
+                        tooltip="{i18n>filters}"
+                        press="onFilterPress"
+                    />
+                    <m:Button
+                        id="personalizeButton"
+                        icon="sap-icon://action-settings"
+                        tooltip="{i18n>personalize}"
+                        press="onPersonalizePress"
+                    />
+                </m:OverflowToolbar>
+            </extension>
+
+            <dragDropConfig>
+                <dnd:DragDropInfo
+                    sourceAggregation="columns"
+                    targetAggregation="columns"
+                    dropPosition="Between"
+                    drop="onColumnMove"
+                />
+            </dragDropConfig>
+
+            <noData>
+                <m:IllustratedMessage />
+            </noData>
+
+            <!-- Table Columns -->
+            <columns>
+                <Column id="EmployeeID">
+                    <label>
+                        <m:Label text="{i18n>id}" />
+                    </label>
+                    <template>
+                        <m:Text text="{EmployeeID}" />
+                    </template>
+                </Column>
+                <Column id="Name">
+                    <label>
+                        <m:Label text="{i18n>name}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Name}" />
+                    </template>
+                </Column>
+                <Column id="Department">
+                    <label>
+                        <m:Label text="{i18n>department}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Department}" />
+                    </template>
+                </Column>
+                <Column id="Location">
+                    <label>
+                        <m:Label text="{i18n>location}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Location}" />
+                    </template>
+                </Column>
+                <Column id="Email">
+                    <label>
+                        <m:Label text="{i18n>email}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Email}" />
+                    </template>
+                </Column>
+                <Column id="Phone">
+                    <label>
+                        <m:Label text="{i18n>phone}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Phone}" />
+                    </template>
+                </Column>
+                <Column id="Title">
+                    <label>
+                        <m:Label text="{i18n>title}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Title}" />
+                    </template>
+                </Column>
+                <Column id="Status">
+                    <label>
+                        <m:Label text="{i18n>status}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Status}" />
+                    </template>
+                </Column>
+                <Column id="Salary">
+                    <label>
+                        <m:Label text="{i18n>salary}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Salary}" />
+                    </template>
+                </Column>
+                <Column id="JoiningDate">
+                    <label>
+                        <m:Label text="{i18n>joiningDate}" />
+                    </label>
+                    <template>
+                        <m:Text text="{JoiningDate}" />
+                    </template>
+                </Column>
+                <Column id="Experience">
+                    <label>
+                        <m:Label text="{i18n>experience}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Experience}" />
+                    </template>
+                </Column>
+                <Column id="Skills">
+                    <label>
+                        <m:Label text="{i18n>skills}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Skills}" />
+                    </template>
+                </Column>
+                <Column id="Projects">
+                    <label>
+                        <m:Label text="{i18n>projects}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Projects}" />
+                    </template>
+                </Column>
+                <Column id="Performance">
+                    <label>
+                        <m:Label text="{i18n>performance}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Performance}" />
+                    </template>
+                </Column>
+                <Column id="Age">
+                    <label>
+                        <m:Label text="{i18n>age}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Age}" />
+                    </template>
+                </Column>
+                <Column id="Gender">
+                    <label>
+                        <m:Label text="{i18n>gender}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Gender}" />
+                    </template>
+                </Column>
+                <Column id="MaritalStatus">
+                    <label>
+                        <m:Label text="{i18n>maritalStatus}" />
+                    </label>
+                    <template>
+                        <m:Text text="{MaritalStatus}" />
+                    </template>
+                </Column>
+                <Column id="Education">
+                    <label>
+                        <m:Label text="{i18n>education}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Education}" />
+                    </template>
+                </Column>
+                <Column id="Certifications">
+                    <label>
+                        <m:Label text="{i18n>certifications}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Certifications}" />
+                    </template>
+                </Column>
+                <Column id="Languages">
+                    <label>
+                        <m:Label text="{i18n>languages}" />
+                    </label>
+                    <template>
+                        <m:Text text="{Languages}" />
+                    </template>
+                </Column>
+            </columns>
+        </Table>
+    </m:Page>
+</mvc:View>

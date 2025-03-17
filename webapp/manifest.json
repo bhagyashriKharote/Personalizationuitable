@@ -1,0 +1,99 @@
+{
+    "_version": "1.60.0",
+    "sap.app": {
+        "id": "com.personalization.ui.tablepersonalizationui",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.16.5",
+            "toolsId": "e6cca4b9-97cb-471f-8c41-52de9516b649"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "fullWidth": true,
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "dependencies": {
+            "minUI5Version": "1.120.27",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.ui.fl": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.personalization.ui.tablepersonalizationui.i18n.i18n"
+                }
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "transition": "slide",
+                "type": "View",
+                "viewType": "XML",
+                "path": "com.personalization.ui.tablepersonalizationui.view",
+                "async": true,
+                "viewPath": "com.personalization.ui.tablepersonalizationui.view"
+            },
+            "routes": [
+                {
+                    "name": "Routepersonalizationui",
+                    "pattern": ":?query:",
+                    "target": [
+                        "Targetpersonalizationui"
+                    ]
+                }
+            ],
+            "targets": {
+                "Targetpersonalizationui": {
+                    "id": "personalizationui",
+                    "name": "personalizationui"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.personalization.ui.tablepersonalizationui.view.App",
+            "type": "XML",
+            "id": "App"
+        }
+    }
+}
