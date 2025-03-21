@@ -4,6 +4,9 @@
     xmlns="sap.ui.table"
     xmlns:fb="sap.ui.comp.filterbar"
     xmlns:m="sap.m"
+    xmlns:columnmenu="sap.m.table.columnmenu"
+    xmlns:sap.ui.fl="sap.ui.fl"
+    xmlns:sap.ui.dt="sap.ui.dt"
     xmlns:vm="sap.ui.fl.variants"
     xmlns:dnd="sap.ui.core.dnd"
     controllerName="com.personalization.ui.tablepersonalizationui.controller.personalizationui"
@@ -62,12 +65,13 @@
         <!-- Table with Personalization -->
         <Table
             id="idEmployeeTable"
+            sort="onSort"
+            columnResize="onColumnResize"
+            columnMove="onColumnMove"
+            rowMode="Auto"
+            ariaLabelledBy="title"
+            sap.ui.fl:flexibility="sap/m/flexibility/EngineFlex"
             rows="{/employees}"
-            selectionMode="MultiToggle"
-            enableColumnFreeze="true"
-            enableColumnReordering="true"
-            threshold="20"
-            rowActionCount="2"
         >
             <extension>
                 <m:OverflowToolbar>
@@ -102,22 +106,22 @@
                 </m:OverflowToolbar>
             </extension>
 
-            <dragDropConfig>
-                <dnd:DragDropInfo
-                    sourceAggregation="columns"
-                    targetAggregation="columns"
-                    dropPosition="Between"
-                    drop="onColumnMove"
-                />
-            </dragDropConfig>
+            <dependents>
+                <columnmenu:Menu id="menu">
+                    <columnmenu:items>
+                        <columnmenu:ActionItem icon="sap-icon://sort" label="Sort" press="onColumnHeaderItemPress"/>
+                        <columnmenu:ActionItem icon="sap-icon://table-column" label="Columns" press="onColumnHeaderItemPress"/>
+                    </columnmenu:items>
+                </columnmenu:Menu>
+            </dependents>
 
             <noData>
-                <m:IllustratedMessage />
+                <m:IllustratedMessage enableVerticalResponsiveness="true"/>
             </noData>
 
             <!-- Table Columns -->
             <columns>
-                <Column id="EmployeeID">
+                <Column id="EmployeeID" sortProperty="EmployeeID" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>id}" />
                     </label>
@@ -125,7 +129,7 @@
                         <m:Text text="{EmployeeID}" />
                     </template>
                 </Column>
-                <Column id="Name">
+                <Column id="Name" sortProperty="Name" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>name}" />
                     </label>
@@ -133,7 +137,7 @@
                         <m:Text text="{Name}" />
                     </template>
                 </Column>
-                <Column id="Department">
+                <Column id="Department" sortProperty="Department" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>department}" />
                     </label>
@@ -141,7 +145,7 @@
                         <m:Text text="{Department}" />
                     </template>
                 </Column>
-                <Column id="Location">
+                <Column id="Location" sortProperty="Location" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>location}" />
                     </label>
@@ -149,7 +153,7 @@
                         <m:Text text="{Location}" />
                     </template>
                 </Column>
-                <Column id="Email">
+                <Column id="Email" sortProperty="Email" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>email}" />
                     </label>
@@ -157,7 +161,7 @@
                         <m:Text text="{Email}" />
                     </template>
                 </Column>
-                <Column id="Phone">
+                <Column id="Phone" sortProperty="Phone" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>phone}" />
                     </label>
@@ -165,7 +169,7 @@
                         <m:Text text="{Phone}" />
                     </template>
                 </Column>
-                <Column id="Title">
+                <Column id="Title" sortProperty="Title" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>title}" />
                     </label>
@@ -173,7 +177,7 @@
                         <m:Text text="{Title}" />
                     </template>
                 </Column>
-                <Column id="Status">
+                <Column id="Status" sortProperty="Status" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>status}" />
                     </label>
@@ -181,7 +185,7 @@
                         <m:Text text="{Status}" />
                     </template>
                 </Column>
-                <Column id="Salary">
+                <Column id="Salary" sortProperty="Salary" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>salary}" />
                     </label>
@@ -189,7 +193,7 @@
                         <m:Text text="{Salary}" />
                     </template>
                 </Column>
-                <Column id="JoiningDate">
+                <Column id="JoiningDate" sortProperty="JoiningDate" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>joiningDate}" />
                     </label>
@@ -197,7 +201,7 @@
                         <m:Text text="{JoiningDate}" />
                     </template>
                 </Column>
-                <Column id="Experience">
+                <Column id="Experience" sortProperty="Experience" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>experience}" />
                     </label>
@@ -205,7 +209,7 @@
                         <m:Text text="{Experience}" />
                     </template>
                 </Column>
-                <Column id="Skills">
+                <Column id="Skills" sortProperty="Skills" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>skills}" />
                     </label>
@@ -213,7 +217,7 @@
                         <m:Text text="{Skills}" />
                     </template>
                 </Column>
-                <Column id="Projects">
+                <Column id="Projects" sortProperty="Projects" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>projects}" />
                     </label>
@@ -221,7 +225,7 @@
                         <m:Text text="{Projects}" />
                     </template>
                 </Column>
-                <Column id="Performance">
+                <Column id="Performance" sortProperty="Performance" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>performance}" />
                     </label>
@@ -229,7 +233,7 @@
                         <m:Text text="{Performance}" />
                     </template>
                 </Column>
-                <Column id="Age">
+                <Column id="Age" sortProperty="Age" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>age}" />
                     </label>
@@ -237,7 +241,7 @@
                         <m:Text text="{Age}" />
                     </template>
                 </Column>
-                <Column id="Gender">
+                <Column id="Gender" sortProperty="Gender" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>gender}" />
                     </label>
@@ -245,7 +249,7 @@
                         <m:Text text="{Gender}" />
                     </template>
                 </Column>
-                <Column id="MaritalStatus">
+                <Column id="MaritalStatus" sortProperty="MaritalStatus" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>maritalStatus}" />
                     </label>
@@ -253,7 +257,7 @@
                         <m:Text text="{MaritalStatus}" />
                     </template>
                 </Column>
-                <Column id="Education">
+                <Column id="Education" sortProperty="Education" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>education}" />
                     </label>
@@ -261,7 +265,7 @@
                         <m:Text text="{Education}" />
                     </template>
                 </Column>
-                <Column id="Certifications">
+                <Column id="Certifications" sortProperty="Certifications" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>certifications}" />
                     </label>
@@ -269,7 +273,7 @@
                         <m:Text text="{Certifications}" />
                     </template>
                 </Column>
-                <Column id="Languages">
+                <Column id="Languages" sortProperty="Languages" headerMenu="menu" resizable="true" width="11rem" autoResizable="true">
                     <label>
                         <m:Label text="{i18n>languages}" />
                     </label>
