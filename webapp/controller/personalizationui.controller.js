@@ -111,11 +111,15 @@ sap.ui.define([
 			var aFilters = [];
 		
 			// Get filter values
+			var sEmployeeID = this.byId("employeeIDInput").getValue(); // New input for EmployeeID
 			var sDepartment = this.byId("departmentInput").getValue();
 			var sTitle = this.byId("titleInput").getValue();
 			var sSkills = this.byId("skillsInput").getValue();
 		
 			// Apply filters if values exist
+			if (sEmployeeID) {
+				aFilters.push(new sap.ui.model.Filter("EmployeeID", sap.ui.model.FilterOperator.Contains, sEmployeeID));
+			}
 			if (sDepartment) {
 				aFilters.push(new sap.ui.model.Filter("Department", sap.ui.model.FilterOperator.Contains, sDepartment));
 			}
@@ -134,7 +138,7 @@ sap.ui.define([
 				console.error("Table binding not found.");
 			}
 		},
-
+		
 		onFilterPress: function () {
             var oFilterBar = this.getView().byId("filterBar"); // Replace with actual FilterBar ID
             if (oFilterBar) {
@@ -166,11 +170,9 @@ sap.ui.define([
 			var sAffectedProperty = this._getKey(oEvt.getParameter("column"));
 			var sSortOrder = oEvt.getParameter("sortOrder");
 
-			//Apply the state programatically on sorting through the column menu
-			//1) Retrieve the current personalization state
 			Engine.getInstance().retrieveState(oTable).then(function(oState){
 
-				//2) Modify the existing personalization state --> clear all sorters before
+				//Modify the existing personalization state 
 				oState.Sorter.forEach(function(oSorter){
 					oSorter.sorted = false;
 				});
@@ -179,7 +181,7 @@ sap.ui.define([
 					descending: sSortOrder === CoreLibrary.SortOrder.Descending
 				});
 
-				//3) Apply the modified personalization state to persist it in the VariantManagement
+				//Apply the modified personalization state to persist it in the VariantManagement
 				Engine.getInstance().applyState(oTable, oState);
 			});
 		},
