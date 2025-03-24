@@ -15,39 +15,14 @@ sap.ui.define([
 	return Controller.extend("com.personalization.ui.tablepersonalizationui.controller.personalizationui", {
 
 		onInit: function() {
-			const oData = {
-                employees: [
-                    {
-                        EmployeeID: "E001",
-                        Name: "John Doe",
-                        Department: "HR",
-                        Location: "New York",
-                        Email: "john.doe@example.com",
-                        Phone: "123-456-7890",
-                        Title: "Manager",
-                        Status: "Active",
-                        Salary: "100,000",
-                        JoiningDate: "2020-01-01",
-                        Experience: "5",
-                        Skills: "Leadership",
-                        Projects: "Project A",
-                        Performance: "Excellent",
-                        Age: "30",
-                        Gender: "Male",
-                        MaritalStatus: "Single",
-                        Education: "MBA",
-                        Certifications: "PMP",
-                        Languages: "English"
-                    }
-                ]
-            };
+            var oModel = new JSONModel();
+            oModel.loadData("/model/data.json");
 
-			var oModel = new JSONModel(oData);
-
-			this.getView().setModel(oModel);
-
-			this._registerForP13n();
-		},
+            oModel.attachRequestCompleted(function() {
+                this.getView().setModel(oModel);
+                this._registerForP13n();
+            }.bind(this));
+        },
 
 		_registerForP13n: function() {
 			var oTable = this.byId("idEmployeeTable");
@@ -130,6 +105,51 @@ sap.ui.define([
 			});
 		},
 
+		onGoPress: function() {
+			var oTable = this.byId("idEmployeeTable");
+			var oModel = this.getView().getModel();
+			var aFilters = [];
+		
+			// Get filter values
+			var sDepartment = this.byId("departmentInput").getValue();
+			var sTitle = this.byId("titleInput").getValue();
+			var sSkills = this.byId("skillsInput").getValue();
+		
+			// Apply filters if values exist
+			if (sDepartment) {
+				aFilters.push(new sap.ui.model.Filter("Department", sap.ui.model.FilterOperator.Contains, sDepartment));
+			}
+			if (sTitle) {
+				aFilters.push(new sap.ui.model.Filter("Title", sap.ui.model.FilterOperator.Contains, sTitle));
+			}
+			if (sSkills) {
+				aFilters.push(new sap.ui.model.Filter("Skills", sap.ui.model.FilterOperator.Contains, sSkills));
+			}
+		
+			// Check if table binding exists
+			var oBinding = oTable.getBinding("rows");
+			if (oBinding) {
+				oBinding.filter(aFilters);
+			} else {
+				console.error("Table binding not found.");
+			}
+		},
+
+		onFilterPress: function () {
+            var oFilterBar = this.getView().byId("filterBar"); // Replace with actual FilterBar ID
+            if (oFilterBar) {
+                var bVisible = oFilterBar.getVisible();
+                oFilterBar.setVisible(!bVisible);
+            } else {
+                sap.m.MessageToast.show("Filter Bar not found");
+            }
+        },
+
+		onHideFilterPress: function () {
+            var oFilterBar = this.getView().byId("filterBar");
+            oFilterBar.setVisible(!oFilterBar.getVisible());
+        },
+		
 		onColumnHeaderItemPress: function(oEvt) {
 			var oTable = this.byId("idEmployeeTable");
 			var sPanel = oEvt.getSource().getIcon().indexOf("sort") >= 0 ? "Sorter" : "Columns";
